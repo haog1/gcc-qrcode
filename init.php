@@ -12,6 +12,7 @@ function add_admin_menu() {
 function render_admin_panel() {
   echo '<div class="wrapper">';
   echo '<h1>QR Code Generator</h1>';
+  echo '<h2>Sample</h2>';
   echo '</div>';
 }
 
