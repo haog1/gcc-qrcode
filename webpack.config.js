@@ -13,8 +13,8 @@ module.exports = async( env, argv ) => {
 
   let config = {
     entry: {
-      "main-script": './js/main.js',
-      "main-style": './sass/main.scss',
+      "qr-code-main-script": './js/main.js',
+      "qr-code-main-style": './sass/main.scss',
     },
     output: {
       path:             path.resolve( __dirname, 'dist' ),

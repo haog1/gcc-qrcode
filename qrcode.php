@@ -8,5 +8,10 @@
  * Author URI: https://github.com/haog1
  */
 
-require_once 'lib/qrlib.php';
-require_once 'init.php';
+add_action('plugins_loaded', 'plugin_loaded');
+
+function plugin_loaded() {
+  require_once 'enqueue.php';
+  require_once 'lib/qrlib.php';
+  require_once 'init.php';
+}
