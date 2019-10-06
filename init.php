@@ -10,10 +10,36 @@ function add_admin_menu() {
 }
 
 function render_admin_panel() {
-  echo '<div class="wrapper">';
-  echo '<h1>QR Code Generator</h1>';
-  echo '<h2>Sample</h2>';
-  echo '</div>';
+  ?>
+  <div class="wrapper">
+    <h1 class="title">Generate QR Code</h1>
+    <h2 class="sub-title">Choose a Post Type</h2>
+    <form action="/generate-qr-code">
+      <select id="generate-qr-code-selector" required="true">
+        <option value="">Please choose a type</option>
+        <?php
+          foreach(get_post_types() as $value => $name ) {
+            if( $value != 'nav_menu_item' &&
+                $value != 'acf-field' &&
+                $value != 'acf-field-group' &&
+                $value != 'schema' &&
+                $value != 'wp_block' &&
+                $value != 'user_request' &&
+                $value != 'customize_changeset' &&
+                $value != 'custom_css' &&
+                $value != 'calendar' &&
+                $value != 'oembed_cache' &&
+                $value != 'revision' ) {
+              echo '<option value="' . $value . '">' . $name . '</option>';
+            }
+          }
+        ?>
+      </select>
+      <div class="clear" style="margin-bottom: 30px;"></div>
+      <button class="button button-primary button-hero">Generate</button>
+    </form>
+  </div>
+  <?php
 }
 
 function generateQRCode( $data ) {
