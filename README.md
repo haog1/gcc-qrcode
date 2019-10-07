@@ -1,5 +1,7 @@
 # gcc-qrcode
-A Wordpress Plugin to generate dynamic QR Code
+A Wordpress Plugin to generate dynamic QR Code. 
+
+It will generate a QR Code for each chosen single post type.
 
 QR Code Source is from [http://phpqrcode.sourceforge.net/](http://phpqrcode.sourceforge.net/)
 
