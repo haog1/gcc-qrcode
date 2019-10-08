@@ -79,16 +79,16 @@ function handleGenerateQRCode() {
   if(!$post_id) {
     exit;
   }
-  $string = '/resources/library?post_type=' . $post_type . '?post_id=' . $post_id;
-  $data = get_home_url() . $string;
-  $path = generateQRCode($data, $post_id);
+
+  $data = get_permalink($post_id);
+  $path = generateQRCode($data, $post_type, $post_id);
   echo json_encode([
-    'url' => wp_upload_dir()['baseurl'] . $path,
+    'url' => wp_upload_dir()['baseurl'] . '/qr-code-pngs' . $path,
     'status' => 200 ]);
   exit;
 }
 
-function generateQRCode( $data, $id ) {
+function generateQRCode( $data, $post_type, $post_id ) {
   if( !$data ) {
     return;
   }
@@ -98,12 +98,13 @@ function generateQRCode( $data, $id ) {
   if (!file_exists($path)) {
     mkdir($path, 0777, true);
   }
+  $filename = '/qrcode_'. $post_type . $post_id . '.png';
 
-  $filename = $path. '/qr-code-' . $id . '.png';
+  $absolutePath = $path . $filename;
 
-  if (!file_exists($filename)) {
-    QRcode::png($data , $filename);
+  if (!file_exists($absolutePath)) {
+    QRcode::png($data , $absolutePath);
   }
 
-  return '/qr-code-pngs/qr-code-' . $id . '.png';
+  return $filename;
 }
