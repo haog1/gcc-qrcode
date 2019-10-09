@@ -32,7 +32,7 @@ function generateQRCode(target, type, callback = null) {
     target.prepend(src);
 
     if(callback) {
-      callback(target, response);
+      callback(target, response, type);
     }
   });
 }
@@ -44,10 +44,12 @@ function removingOldQRCode(target) {
   parent.find('a.qrcode-img-wrapper').remove();
 }
 
-function cleanUpLabels(target, response) {
+function cleanUpLabels(target, response, type) {
   target.find('.generate-qr-code-link').addClass('regenerate-qr-code-link').removeClass( 'generate-qr-code-link' );
   target.find('.regenerate-qr-code-link').removeClass( 'disabled' );
   target.find('.regenerate-qr-code-link').text( 'Regenerate' );
   target.addClass('regenerate').removeClass('generate');
-  location.reload(true);
+  if( type === 'generate' ) {
+    location.reload(true);
+  }
 }
