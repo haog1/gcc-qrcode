@@ -1,5 +1,7 @@
-.gcc-qr-code--wrapper {
+.gcc-qr-code--meta-box-wrapper {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .standalone-png {
@@ -10,9 +12,43 @@
 
 .qrcode-img-wrapper {
   display: inline-block;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    color: black;
+    text-decoration: none;
+
+    &:hover {
+      cursor: text;
+    }
+  }
 }
 
 .regenerate-qr-code-link {
   display: inline-block;
+  margin-top: 15px;
   margin-left: 10px;
+
+  &:hover,
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
+
+  &.disabled {
+    margin-top: 114px;
+    pointer-events: none;
+    color: black;
+    text-decoration: none;
+
+    &:hover {
+      cursor: text;
+    }
+  }
 }

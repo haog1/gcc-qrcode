@@ -2,23 +2,50 @@ $( document ).ready( function() {
 
   $( 'a.generate-qr-code-link' ).on( 'click', function ( e ) {
     e.preventDefault();
-
-    let data = {
-      name: $( '.gcc-qr-code--meta-box-wrapper' ).data( 'name' ),
-      id: $( '.gcc-qr-code--meta-box-wrapper' ).data( 'id' ),
-      action: 'gcc_qr_code_generate',
-    }
-
-    $.ajax({
-      url: window.ajaxurl,
-      method: 'POST',
-      dataType: 'json',
-      data: data,
-  }).done(function(response) {
-    let src = '<a class="qrcode-img-wrapper" href="'+ response.url + '" target="_blank"><img src="' + response.url + '"></a>';
-    $('.gcc-qr-code--meta-box-wrapper').append(src);
+    $(this).addClass('disabled');
+    generateQRCode($(this).closest('.gcc-qr-code--meta-box-wrapper'), 'generate', cleanUpLabels);
   });
 
+  $( 'a.regenerate-qr-code-link' ).on( 'click', function ( e ) {
+    let target = $(this);
+    removingOldQRCode(target);
+    generateQRCode(target.closest('.gcc-qr-code--meta-box-wrapper.regenerate'), 'regenerate', cleanUpLabels);
   });
 
 });
+
+function generateQRCode(target, type, callback = null) {
+  let data = {
+    name: target.data( 'name' ),
+    id: target.data( 'id' ),
+    type: type,
+    action: 'gcc_qr_code_generate',
+  }
+
+  $.ajax({
+    url: window.ajaxurl,
+    method: 'POST',
+    dataType: 'json',
+    data: data,
+  }).done(function(response) {
+    let src = '<a class="qrcode-img-wrapper ' + type + '" href="'+ response.url + '" target="_blank"><img src="' + response.url + '"></a>';
+    target.prepend(src);
+
+    if(callback) {
+      callback(target, response);
+    }
+  });
+}
+
+function removingOldQRCode(target) {
+  target.addClass( 'disabled' );
+  target.text( 'generating...' );
+  let parent = target.closest('.gcc-qr-code--meta-box-wrapper.regenerate');
+  parent.find('a.qrcode-img-wrapper').remove();
+}
+
+function cleanUpLabels(target, response) {
+  target.find('.generate-qr-code-link').addClass('regenerate-qr-code-link').removeClass( 'generate-qr-code-link' );
+  target.find('.regenerate-qr-code-link').removeClass( 'disabled' );
+  target.find('.regenerate-qr-code-link').text( 'Regenerate' );
+}
