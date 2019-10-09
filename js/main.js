@@ -48,4 +48,6 @@ function cleanUpLabels(target, response) {
   target.find('.generate-qr-code-link').addClass('regenerate-qr-code-link').removeClass( 'generate-qr-code-link' );
   target.find('.regenerate-qr-code-link').removeClass( 'disabled' );
   target.find('.regenerate-qr-code-link').text( 'Regenerate' );
+  target.addClass('regenerate').removeClass('generate');
+  location.reload(true);
 }
