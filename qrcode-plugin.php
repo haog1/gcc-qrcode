@@ -10,8 +10,8 @@
 
 require_once 'vendor/autoload.php';
 require_once 'helper.php';
-$dotenv = Dotenv\Dotenv::create(__DIR__);
-$dotenv->load();
+// $dotenv = Dotenv\Dotenv::create(__DIR__);
+// $dotenv->load();
 
 add_action('plugins_loaded', 'plugin_loaded');
 

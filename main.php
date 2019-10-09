@@ -100,6 +100,7 @@ function createNewCodeTemplate($post) {
 }
 
 function handleGenerateQRCode() {
+  $type = array_get( $_POST, 'type' );
   $post_type = array_get( $_POST, 'name' );
   $post_id = array_get( $_POST, 'id' );
   if(!$post_type) {
@@ -110,29 +111,36 @@ function handleGenerateQRCode() {
   }
 
   $data = get_permalink($post_id);
-  $path = generateQRCode($data, $post_type, $post_id);
+  $path = generateQRCode($data, $post_type, $post_id, $type);
   echo json_encode([
     'url' => wp_upload_dir()['baseurl'] . '/qr-code-pngs' . $path,
     'status' => 200 ]);
   exit;
 }
 
-function generateQRCode( $data, $post_type, $post_id ) {
+function generateQRCode( $data, $post_type, $post_id, $type ) {
   if( !$data ) {
     return;
   }
   $base = wp_upload_dir();
   $path = $base['basedir'] . '/qr-code-pngs';
 
-  if (!file_exists($path)) {
+  if(!file_exists($path)) {
     mkdir($path, 0777, true);
   }
   $filename = '/qrcode_'. $post_type . $post_id . '.png';
 
   $absolutePath = $path . $filename;
 
-  if (!file_exists($absolutePath)) {
+  if(!file_exists($absolutePath)) {
     QRcode::png($data , $absolutePath);
+  } else if($type == 'regenerate') {
+    try {
+      @unlink($absolutePath);
+      QRcode::png($data , $absolutePath);
+    } catch( \Exception $e) {
+      return 'Failed to deleted old file';
+    }
   }
 
   return $filename;
