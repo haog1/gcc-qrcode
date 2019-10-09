@@ -15,7 +15,7 @@ $( document ).ready( function() {
       dataType: 'json',
       data: data,
   }).done(function(response) {
-    let src = '<a href="'+ response.url + '" target="_blank"><img src="' + response.url + '"></a>';
+    let src = '<a class="qrcode-img-wrapper" href="'+ response.url + '" target="_blank"><img src="' + response.url + '"></a>';
     $('.gcc-qr-code--meta-box-wrapper').append(src);
   });
 

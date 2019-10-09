@@ -61,6 +61,29 @@ function addQRCodeMetaBox() {
 
 function generateQRCodeHTML() {
   global $post;
+
+  $post_type = $post->post_type;
+  $post_id = $post->ID;
+
+  $filename = 'qrcode_' . $post_type . $post_id . '.png';
+
+  $file = wp_upload_dir()['basedir'] . '/qr-code-pngs' . '/' . $filename;
+
+  if( file_exists($file)) {
+    showExistingCodeTemplate($post, $filename);
+  } else {
+    createNewCodeTemplate($post);
+  }
+
+}
+
+function showExistingCodeTemplate($post, $filename) {
+  $link = wp_upload_dir()['baseurl'] . '/qr-code-pngs' . '/' . $filename;
+  echo '<a class="qrcode-img-wrapper" href="' . $link . '" target="_blank"><img src="' . $link . '"></a><br>';
+  echo '<a href="javascript:void(0);" class="regenerate-qr-code-link">Regenerate</a>';
+}
+
+function createNewCodeTemplate($post) {
   ?>
   <div class="gcc-qr-code--meta-box-wrapper" data-name="<?= $post->post_type ?>" data-id="<?= $post->ID ?>">
     <a href="javascript:void(0);" class="button button-primary button-large generate-qr-code-link">
