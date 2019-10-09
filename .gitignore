@@ -1,3 +1,7 @@
+!/vendor
 /node_modules
 /dist/js/*.map
 /dist/css/*.map
+.env
+.DS_Store
+.idea/

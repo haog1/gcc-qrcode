@@ -8,10 +8,15 @@
  * Author URI: https://github.com/haog1
  */
 
+require_once 'vendor/autoload.php';
+require_once 'helper.php';
+$dotenv = Dotenv\Dotenv::create(__DIR__);
+$dotenv->load();
+
 add_action('plugins_loaded', 'plugin_loaded');
 
 function plugin_loaded() {
   require_once 'enqueue.php';
   require_once 'lib/qrlib.php';
-  require_once 'init.php';
+  require_once 'main.php';
 }
