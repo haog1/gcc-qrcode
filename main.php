@@ -1,5 +1,9 @@
 <?php
 
+if(array_get($_GET, 'action') != 'edit') {
+  return;
+}
+
 add_action( 'admin_menu', 'addAdminMenu' );
 add_action( 'add_meta_boxes', 'addQRCodeMetaBox' );
 add_action("wp_ajax_gcc_qr_code_generate", 'handleGenerateQRCode' );
@@ -29,7 +33,6 @@ function renderAdminPanel() {
                 $value != 'user_request' &&
                 $value != 'customize_changeset' &&
                 $value != 'custom_css' &&
-                $value != 'calendar' &&
                 $value != 'oembed_cache' &&
                 $value != 'revision' ) {
               echo '<option value="' . $value . '">' . $name . '</option>';
@@ -53,9 +56,19 @@ function renderAdminPanel() {
 }
 
 function addQRCodeMetaBox() {
-  $screens = ['page', 'book'];
-  foreach ($screens as $screen) {
-    add_meta_box( 'gcc-qr-code-for-' . $screen, 'Generate QR Code', 'generateQRCodeHTML', $screen, 'side', 'low' );
+  foreach (get_post_types() as $screen) {
+    if( $value != 'nav_menu_item' &&
+    $value != 'acf-field' &&
+    $value != 'acf-field-group' &&
+    $value != 'schema' &&
+    $value != 'wp_block' &&
+    $value != 'user_request' &&
+    $value != 'customize_changeset' &&
+    $value != 'custom_css' &&
+    $value != 'oembed_cache' &&
+    $value != 'revision' ) {
+      add_meta_box( 'gcc-qr-code-for-' . $screen, 'Generate QR Code', 'generateQRCodeHTML', $screen, 'side', 'low' );
+    }
   }
 }
 

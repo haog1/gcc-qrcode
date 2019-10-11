@@ -3,8 +3,5 @@
   "description": "GCC QR Code Plugin",
   "require-dev": {
     "symfony/var-dumper": "^4.2"
-  },
-  "require": {
-    "vlucas/phpdotenv": "^3.6"
   }
 }
