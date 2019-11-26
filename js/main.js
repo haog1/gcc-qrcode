@@ -1,13 +1,13 @@
-$( document ).ready( function() {
+jQuery( document ).ready( function() {
 
-  $( 'a.generate-qr-code-link' ).on( 'click', function ( e ) {
+  jQuery( 'a.generate-qr-code-link' ).on( 'click', function ( e ) {
     e.preventDefault();
-    $(this).addClass('disabled');
-    generateQRCode($(this).closest('.gcc-qr-code--meta-box-wrapper'), 'generate', cleanUpLabels);
+    jQuery(this).addClass('disabled');
+    generateQRCode(jQuery(this).closest('.gcc-qr-code--meta-box-wrapper'), 'generate', cleanUpLabels);
   });
 
-  $( 'a.regenerate-qr-code-link' ).on( 'click', function ( e ) {
-    let target = $(this);
+  jQuery( 'a.regenerate-qr-code-link' ).on( 'click', function ( e ) {
+    let target = jQuery(this);
     removingOldQRCode(target);
     generateQRCode(target.closest('.gcc-qr-code--meta-box-wrapper.regenerate'), 'regenerate', cleanUpLabels);
   });
