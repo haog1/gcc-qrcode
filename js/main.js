@@ -22,7 +22,7 @@ function generateQRCode(target, type, callback = null) {
     action: 'gcc_qr_code_generate',
   }
 
-  $.ajax({
+  jQuery.ajax({
     url: window.ajaxurl,
     method: 'POST',
     dataType: 'json',
